@@ -9,10 +9,10 @@ Player attempts to eat apples by running into them with the head of the snake. E
 
 ### Controls
 
-UP - Up Arrow
-DOWN - Down Arrow
-LEFT - Left Arrow
-RIGHT - Right Arrow
+ - UP - Up Arrow
+ - DOWN - Down Arrow
+ - LEFT - Left Arrow
+ - RIGHT - Right Arrow
 
 
 
