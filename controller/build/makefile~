@@ -1,0 +1,3 @@
+all:
+	gcc -o ../runall unity.o unity_fixture.o controll_test.o runall.o ../../build/controller.o
+

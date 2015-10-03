@@ -1,8 +1,14 @@
 CC=gcc
 
-all: controller
+all: controller tests build
 
-.PHONY: controller
+.PHONY: controller tests build
 
 controller:
-	$(CC) -c controller.c -o ../build/controller.o
+	$(CC) -c src/controller.c -o ../build/controller.o
+
+tests:
+	$(MAKE) -C tests all
+
+build:
+	$(MAKE) -C build all 
