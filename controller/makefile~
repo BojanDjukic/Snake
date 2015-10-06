@@ -8,7 +8,7 @@ controller:
 	$(CC) -c src/controller.c -o ../build/controller.o
 
 tests:
-	$(CC) -C tests all
+	$(MAKE) -C tests all
 
 build:
-	$(CC) -C build all 
+	$(MAKE) -C build all 

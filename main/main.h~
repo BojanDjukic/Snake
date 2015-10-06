@@ -1,0 +1,14 @@
+#ifndef MAIN_H
+#define MAIN_H
+
+#include "../controller/src/controller.h"
+#include "../gui/src/gui.h"
+#include "../SDL/SDL.h"
+
+
+
+
+
+
+
+#endif
