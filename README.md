@@ -22,6 +22,7 @@ Player attempts to eat apples by running into them with the head of the snake. E
  - main 
  - controller
  - GUI
+ - snake
 
 
 

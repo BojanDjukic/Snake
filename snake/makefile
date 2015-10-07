@@ -4,7 +4,7 @@ all: snake tests build
 
 .PHONY: snake tests build
 
-gui:
+snake:
 	$(CC) -c src/snake.c -o ../build/snake.o
 
 tests:
