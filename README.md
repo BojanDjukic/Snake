@@ -13,6 +13,7 @@ Player attempts to eat apples by running into them with the head of the snake. E
  - DOWN - Down Arrow
  - LEFT - Left Arrow
  - RIGHT - Right Arrow
+ - QUIT - ESC
 
 
 
@@ -22,3 +23,6 @@ Player attempts to eat apples by running into them with the head of the snake. E
  - controller
  - GUI
 
+
+
+To run this game user needs to have installed SDL version 1.2. 
