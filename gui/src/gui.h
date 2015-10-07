@@ -12,10 +12,10 @@
 #define SCREEN_HEIGHT 640
 #define SNAKE_WIDTH 36
 #define SNAKE_HEIGHT 40
-
+static int xx,yy;
 void apply_surface( int x, int y, SDL_Surface* source, SDL_Surface* destination );
 void setGameOver(SDL_Surface* gameover, SDL_Surface* screen );
-void putFood(SDL_Surface* food, SDL_Surface* screen,int x, int y);
+void putFood(SDL_Surface* food, SDL_Surface* screen,int,int);
 
 
 
