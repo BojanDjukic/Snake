@@ -16,6 +16,7 @@ void setGameOver(SDL_Surface* gameover, SDL_Surface* screen )
 	apply_surface((SCREEN_WIDTH/2) - 222, (SCREEN_HEIGHT/2) - 64, gameover, screen);
 	SDL_Flip (screen);
 	SDL_Delay(2000);
+	
 }
 
 
@@ -36,8 +37,11 @@ int RandomColumn()
 
 void putFood(SDL_Surface* food, SDL_Surface* screen,int xx,int yy)
 {
-	//xx=RandomRow()*36;
-	//yy=RandomColumn()*40;
 	apply_surface(xx, yy, food, screen);
-	//SDL_Flip (screen);
+	result ++;
+}
+
+void showScore(SDL_Surface* score,SDL_Surface* screen)
+{
+
 }

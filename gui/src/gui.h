@@ -13,9 +13,11 @@
 #define SNAKE_WIDTH 36
 #define SNAKE_HEIGHT 40
 static int xx,yy;
+static int result=-1;
 void apply_surface( int x, int y, SDL_Surface* source, SDL_Surface* destination );
 void setGameOver(SDL_Surface* gameover, SDL_Surface* screen );
 void putFood(SDL_Surface* food, SDL_Surface* screen,int,int);
+void showScore(SDL_Surface* score,SDL_Surface* screen);
 
 
 
