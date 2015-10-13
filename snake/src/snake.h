@@ -2,6 +2,7 @@
 #define SNAKE_H
 #include "../../SDL/SDL.h"
 #include "../../gui/src/gui.h"
+int isOnSnake(int xx, int yy);
 
 typedef struct Body
 {

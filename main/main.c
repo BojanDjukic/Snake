@@ -8,7 +8,18 @@ static SDL_Surface* gameover=NULL;
 static SDL_Surface* food=NULL;
 static SDL_Surface* snake=NULL;
 static SDL_Surface* black=NULL;
-
+int isSnakeDead()
+{
+	int i;
+	for (i = 2; i < zmija->snakeLength ; i++)
+	{
+		if (zmija->tijelo[0].x == zmija->tijelo[i].x && zmija->tijelo[0].y == zmija->tijelo[i].y)
+		{
+			return 1;break;
+		}
+	}
+	return 0;
+}
 void moveSnakeOnce(int i)
 {
 	int a;
@@ -52,15 +63,15 @@ void moveSnake()
 			moveSnakeOnce(1);
 			if(xx == zmija->tijelo[0].x && yy==zmija->tijelo[0].y || xx == zmija->tijelo[1].x && yy==zmija->tijelo[1].y)
 			{
-
-				zmija->tijelo[zmija->snakeLength].x = zmija ->tijelo[zmija->snakeLength-1].x;
-				zmija->tijelo[zmija->snakeLength].y = zmija ->tijelo[zmija->snakeLength-1].y;
 				do
 				{
 				xx = RandomRow()*36;
 				yy = RandomColumn()*40;
 				}
-				while (getPixelColour(xx,yy,screen) != 0);
+				while (isOnSnake(xx,yy) == 1);
+
+				zmija->tijelo[zmija->snakeLength].x = zmija ->tijelo[zmija->snakeLength-1].x;
+				zmija->tijelo[zmija->snakeLength].y = zmija ->tijelo[zmija->snakeLength-1].y;
 				putFood(food,screen,xx,yy);
 			}
 	}
@@ -69,15 +80,15 @@ void moveSnake()
 		moveSnakeOnce(2);
 		if(xx == zmija->tijelo[0].x && yy==zmija->tijelo[0].y || xx == zmija->tijelo[1].x && yy==zmija->tijelo[1].y)
 		{
-
-			zmija->tijelo[zmija->snakeLength].x = zmija ->tijelo[zmija->snakeLength-1].x;
-			zmija->tijelo[zmija->snakeLength].y = zmija ->tijelo[zmija->snakeLength-1].y;
 			do
 			{
 			xx = RandomRow()*36;
 			yy = RandomColumn()*40;
 			}
-			while (getPixelColour(xx,yy,screen) != 0);
+			while (isOnSnake(xx,yy) == 1);
+
+			zmija->tijelo[zmija->snakeLength].x = zmija ->tijelo[zmija->snakeLength-1].x;
+			zmija->tijelo[zmija->snakeLength].y = zmija ->tijelo[zmija->snakeLength-1].y;
 			putFood(food,screen,xx,yy);
 		}
 	}
@@ -86,15 +97,15 @@ void moveSnake()
 		moveSnakeOnce(3);
 		if(xx == zmija->tijelo[0].x && yy==zmija->tijelo[0].y || xx == zmija->tijelo[1].x && yy==zmija->tijelo[1].y)
 		{
-
-			zmija->tijelo[zmija->snakeLength].x = zmija ->tijelo[zmija->snakeLength-1].x;
-			zmija->tijelo[zmija->snakeLength].y = zmija ->tijelo[zmija->snakeLength-1].y;
 			do
 			{
 			xx = RandomRow()*36;
 			yy = RandomColumn()*40;
 			}
-			while (getPixelColour(xx,yy,screen) == 1);
+			while (isOnSnake(xx,yy) == 1);
+
+			zmija->tijelo[zmija->snakeLength].x = zmija ->tijelo[zmija->snakeLength-1].x;
+			zmija->tijelo[zmija->snakeLength].y = zmija ->tijelo[zmija->snakeLength-1].y;
 			putFood(food,screen,xx,yy);
 		}
 	}
@@ -103,15 +114,14 @@ void moveSnake()
 		moveSnakeOnce(4);
 		if(xx == zmija->tijelo[0].x && yy==zmija->tijelo[0].y || xx == zmija->tijelo[1].x && yy==zmija->tijelo[1].y)
 		{
-
-			zmija->tijelo[zmija->snakeLength].x = zmija ->tijelo[zmija->snakeLength-1].x;
-			zmija->tijelo[zmija->snakeLength].y = zmija ->tijelo[zmija->snakeLength-1].y;
 			do
 			{
 			xx = RandomRow()*36;
 			yy = RandomColumn()*40;
 			}
-			while (getPixelColour(xx,yy,screen) == 1);
+			while (isOnSnake(xx,yy) == 1);
+			zmija->tijelo[zmija->snakeLength].x = zmija ->tijelo[zmija->snakeLength-1].x;
+			zmija->tijelo[zmija->snakeLength].y = zmija ->tijelo[zmija->snakeLength-1].y;
 			putFood(food,screen,xx,yy);
 		}
 	}
@@ -152,15 +162,15 @@ int main (int argc, char* args[])
 			moveSnakeOnce(1);
 			if(xx == zmija->tijelo[0].x && yy==zmija->tijelo[0].y || xx == zmija->tijelo[1].x && yy==zmija->tijelo[1].y)
 			{
-
-				zmija->tijelo[zmija->snakeLength].x = zmija ->tijelo[zmija->snakeLength-1].x;
-				zmija->tijelo[zmija->snakeLength].y = zmija ->tijelo[zmija->snakeLength-1].y;
 				do
 				{
 				xx = RandomRow()*36;
 				yy = RandomColumn()*40;
 				}
-				while (getPixelColour(xx,yy,screen) == 1);
+				while (isOnSnake(xx,yy) == 1);
+
+				zmija->tijelo[zmija->snakeLength].x = zmija ->tijelo[zmija->snakeLength-1].x;
+				zmija->tijelo[zmija->snakeLength].y = zmija ->tijelo[zmija->snakeLength-1].y;
 				putFood(food,screen,xx,yy);
 			}
 		}
@@ -170,15 +180,15 @@ int main (int argc, char* args[])
 			moveSnakeOnce(2);
 			if(xx == zmija->tijelo[0].x && yy==zmija->tijelo[0].y || xx == zmija->tijelo[1].x && yy==zmija->tijelo[1].y)
 			{
-
-				zmija->tijelo[zmija->snakeLength].x = zmija ->tijelo[zmija->snakeLength-1].x;
-				zmija->tijelo[zmija->snakeLength].y = zmija ->tijelo[zmija->snakeLength-1].y;
 				do
 				{
 				xx = RandomRow()*36;
 				yy = RandomColumn()*40;
 				}
-				while (getPixelColour(xx,yy,screen) == 1);
+				while (isOnSnake(xx,yy) == 1);
+
+				zmija->tijelo[zmija->snakeLength].x = zmija ->tijelo[zmija->snakeLength-1].x;
+				zmija->tijelo[zmija->snakeLength].y = zmija ->tijelo[zmija->snakeLength-1].y;
 				putFood(food,screen,xx,yy);
 			}
 		}
@@ -188,15 +198,15 @@ int main (int argc, char* args[])
 			moveSnakeOnce(3);
 			if(xx == zmija->tijelo[0].x && yy==zmija->tijelo[0].y || xx == zmija->tijelo[1].x && yy==zmija->tijelo[1].y)
 			{
-
-				zmija->tijelo[zmija->snakeLength].x = zmija ->tijelo[zmija->snakeLength-1].x;
-				zmija->tijelo[zmija->snakeLength].y = zmija ->tijelo[zmija->snakeLength-1].y;
 				do
 				{
 				xx = RandomRow()*36;
 				yy = RandomColumn()*40;
 				}
-				while (getPixelColour(xx,yy,screen) != 0);
+				while (isOnSnake(xx,yy) == 1);
+
+				zmija->tijelo[zmija->snakeLength].x = zmija ->tijelo[zmija->snakeLength-1].x;
+				zmija->tijelo[zmija->snakeLength].y = zmija ->tijelo[zmija->snakeLength-1].y;
 				putFood(food,screen,xx,yy);
 			}
 		}
@@ -206,15 +216,15 @@ int main (int argc, char* args[])
 			moveSnakeOnce(4);
 			if(xx == zmija->tijelo[0].x && yy==zmija->tijelo[0].y || xx == zmija->tijelo[1].x && yy==zmija->tijelo[1].y)
 			{
-
-				zmija->tijelo[zmija->snakeLength].x = zmija ->tijelo[zmija->snakeLength-1].x;
-				zmija->tijelo[zmija->snakeLength].y = zmija ->tijelo[zmija->snakeLength-1].y;
 				do
 				{
 				xx = RandomRow()*36;
 				yy = RandomColumn()*40;
 				}
-				while (getPixelColour(xx,yy,screen) == 1);
+				while (isOnSnake(xx,yy) == 1);
+
+				zmija->tijelo[zmija->snakeLength].x = zmija ->tijelo[zmija->snakeLength-1].x;
+				zmija->tijelo[zmija->snakeLength].y = zmija ->tijelo[zmija->snakeLength-1].y;
 				putFood(food,screen,xx,yy);
 			}
 		}
@@ -234,7 +244,13 @@ int main (int argc, char* args[])
 			setGameOver(gameover,screen);
 			return EXIT;
 		}
+		if (isSnakeDead() == 1)
+		{
+			setGameOver(gameover,screen);
+			return EXIT;
+		}
 	}
+
 
 	SDL_FreeSurface( snake );
 	SDL_Quit();

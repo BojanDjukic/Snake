@@ -95,7 +95,7 @@ int getPixelColour(int xx, int yy,SDL_Surface* screen)
     red = (unsigned char)r;
     green = (unsigned char)g;
     blue = (unsigned char)b;
-		if (red == 0 && green == 0xff && blue == 0)
+		if (red == 0 && green == 0 && blue == 0)
 		return 1;
 		else return 0;
 }
