@@ -8,18 +8,6 @@ static SDL_Surface* gameover=NULL;
 static SDL_Surface* food=NULL;
 static SDL_Surface* snake=NULL;
 static SDL_Surface* black=NULL;
-int isSnakeDead()
-{
-	int i;
-	for (i = 2; i < zmija->snakeLength ; i++)
-	{
-		if (zmija->tijelo[0].x == zmija->tijelo[i].x && zmija->tijelo[0].y == zmija->tijelo[i].y)
-		{
-			return 1;break;
-		}
-	}
-	return 0;
-}
 void moveSnakeOnce(int i)
 {
 	int a;
@@ -237,13 +225,24 @@ int main (int argc, char* args[])
 		apply_surface(zmija->tijelo[counter].x, zmija->tijelo[counter].y,snake, screen );
 		SDL_Delay(zmija->delay);
 		SDL_Flip(screen);
-		if (zmija->tijelo[0].x == SCREEN_WIDTH  || zmija->tijelo[0].x == 0 - SNAKE_WIDTH || zmija->tijelo[0].y == SCREEN_HEIGHT || zmija->tijelo[0].y == 0 - SNAKE_HEIGHT)
+		if (zmija->tijelo[0].x == SCREEN_WIDTH )
 		{
-			printf("UKUPAN SCORE JE %d\n\n\n",getScore());
-			printf("%d\n\n\n",zmija -> snakeLength);
-			setGameOver(gameover,screen);
-			return EXIT;
+			zmija ->tijelo[0].x = 0;
 		}
+		else if (zmija->tijelo[0].y == SCREEN_HEIGHT)
+		{
+			zmija->tijelo[0].y = 0;
+		}
+		else if (zmija->tijelo[0].x == 0 - SNAKE_WIDTH)
+		{
+			zmija ->tijelo[0].x = SCREEN_WIDTH;
+		}
+		else if (zmija->tijelo[0].y == 0 - SNAKE_HEIGHT)
+		{
+			zmija->tijelo[0].y = SCREEN_HEIGHT;
+		}
+
+
 		if (isSnakeDead() == 1)
 		{
 			setGameOver(gameover,screen);

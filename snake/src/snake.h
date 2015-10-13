@@ -3,7 +3,7 @@
 #include "../../SDL/SDL.h"
 #include "../../gui/src/gui.h"
 int isOnSnake(int xx, int yy);
-
+int isSnakeDead();
 typedef struct Body
 {
   int x;
