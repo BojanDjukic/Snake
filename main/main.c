@@ -8,109 +8,107 @@ static SDL_Surface* gameover=NULL;
 static SDL_Surface* food=NULL;
 static SDL_Surface* snake=NULL;
 static SDL_Surface* black=NULL;
-void moveSnakeOnce(int i)
+static void generateAvailablePlace()
 {
-	int a;
-	if (i == 1)
+	do
 	{
-		for (a=zmija -> snakeLength - 1; a>0; a--)
-		{
-		zmija->tijelo[a].x=zmija->tijelo[a-1].x;
-		zmija->tijelo[a].y = zmija->tijelo[a-1].y;
-		}zmija->tijelo[0].x+= SNAKE_WIDTH;
+			xx = RandomRow()*36;
+			yy = RandomColumn()*40;
 	}
-	else if(i == 2)
+	while (isOnSnake(xx, yy) == 1);
+}
+static void moveSnakeOnce(int direction)
+{
+	int a = 0;
+	if (direction == RIGHT)
 	{
-		for (a=zmija -> snakeLength - 1; a>0; a--)
+		for (a = zmija -> snakeLength - 1; a > 0; a--)
 		{
-			zmija->tijelo[a].x=zmija->tijelo[a-1].x;
-			zmija->tijelo[a].y = zmija->tijelo[a-1].y;
-		}zmija->tijelo[0].x-=SNAKE_WIDTH;
+			takeNewCoordinates(a);
+		}
+		zmija -> tijelo[0].x += SNAKE_WIDTH;
 	}
-	else if (i == 3)
+	else if(direction == LEFT)
 	{
-		for (a=zmija -> snakeLength - 1; a>0; a--)
+		for (a = zmija -> snakeLength - 1; a>0; a--)
 		{
-			zmija->tijelo[a].x=zmija->tijelo[a-1].x;
-			zmija->tijelo[a].y = zmija->tijelo[a-1].y;
-		}zmija->tijelo[0].y+=SNAKE_HEIGHT;
+			takeNewCoordinates(a);
+		}
+		zmija -> tijelo[0].x -= SNAKE_WIDTH;
 	}
-	else if (i == 4)
+	else if (direction == DOWN)
 	{
-		for (a=zmija -> snakeLength - 1; a>0; a--)
+		for (a = zmija -> snakeLength - 1;a > 0; a--)
 		{
-			zmija->tijelo[a].x=zmija->tijelo[a-1].x;
-			zmija->tijelo[a].y = zmija->tijelo[a-1].y;;
-		}zmija->tijelo[0].y-=SNAKE_HEIGHT;
+			takeNewCoordinates(a);
+		}
+		zmija -> tijelo[0].y += SNAKE_HEIGHT;
+	}
+	else if (direction == UP)
+	{
+		for (a = zmija -> snakeLength - 1;a > 0; a--)
+		{
+			takeNewCoordinates(a);
+		}
+		zmija -> tijelo[0].y -= SNAKE_HEIGHT;
 	}
 }
 void moveSnake()
 {
-	if(flag == 1 && zmija->tijelo[0].x <= SCREEN_WIDTH)
+	if(flag == 1
+							&& zmija -> tijelo[0].x <= SCREEN_WIDTH)
 	{
-			moveSnakeOnce(1);
-			if(xx == zmija->tijelo[0].x && yy==zmija->tijelo[0].y || xx == zmija->tijelo[1].x && yy==zmija->tijelo[1].y)
+			moveSnakeOnce(RIGHT);
+			if(xx == zmija -> tijelo[0].x
+																	&& yy == zmija -> tijelo[0].y
+																															|| xx == zmija->tijelo[1].x
+																																												&& yy == zmija->tijelo[1].y)
 			{
-				do
-				{
-				xx = RandomRow()*36;
-				yy = RandomColumn()*40;
-				}
-				while (isOnSnake(xx,yy) == 1);
-
-				zmija->tijelo[zmija->snakeLength].x = zmija ->tijelo[zmija->snakeLength-1].x;
-				zmija->tijelo[zmija->snakeLength].y = zmija ->tijelo[zmija->snakeLength-1].y;
-				putFood(food,screen,xx,yy);
+					generateAvailablePlace();
+					takeNewCoordinates(zmija -> snakeLength);
+					putFood(food, screen, xx, yy);
 			}
 	}
-	else if (flag == 2 && zmija->tijelo[0].x != 0 - SNAKE_WIDTH)
+	else if (flag == 2
+										&& zmija -> tijelo[0].x != 0 - SNAKE_WIDTH)
 	{
-		moveSnakeOnce(2);
-		if(xx == zmija->tijelo[0].x && yy==zmija->tijelo[0].y || xx == zmija->tijelo[1].x && yy==zmija->tijelo[1].y)
+		moveSnakeOnce(LEFT);
+		if(xx == zmija -> tijelo[0].x
+															&& yy == zmija -> tijelo[0].y
+																											|| xx == zmija -> tijelo[1].x
+																																									&& yy == zmija -> tijelo[1].y)
 		{
-			do
-			{
-			xx = RandomRow()*36;
-			yy = RandomColumn()*40;
-			}
-			while (isOnSnake(xx,yy) == 1);
-
-			zmija->tijelo[zmija->snakeLength].x = zmija ->tijelo[zmija->snakeLength-1].x;
-			zmija->tijelo[zmija->snakeLength].y = zmija ->tijelo[zmija->snakeLength-1].y;
-			putFood(food,screen,xx,yy);
+				generateAvailablePlace();
+				takeNewCoordinates(zmija -> snakeLength);
+				putFood(food, screen, xx, yy);
 		}
 	}
-	else if (flag == 3 && zmija->tijelo[0].y <= SCREEN_HEIGHT)
+	else if (flag == 3
+										&& zmija -> tijelo[0].y <= SCREEN_HEIGHT)
 	{
-		moveSnakeOnce(3);
-		if(xx == zmija->tijelo[0].x && yy==zmija->tijelo[0].y || xx == zmija->tijelo[1].x && yy==zmija->tijelo[1].y)
+		moveSnakeOnce(DOWN);
+		if(xx == zmija -> tijelo[0].x
+																&& yy == zmija -> tijelo[0].y
+																														|| xx == zmija->tijelo[1].x
+																																											&& yy == zmija->tijelo[1].y)
 		{
-			do
-			{
-			xx = RandomRow()*36;
-			yy = RandomColumn()*40;
-			}
-			while (isOnSnake(xx,yy) == 1);
-
-			zmija->tijelo[zmija->snakeLength].x = zmija ->tijelo[zmija->snakeLength-1].x;
-			zmija->tijelo[zmija->snakeLength].y = zmija ->tijelo[zmija->snakeLength-1].y;
-			putFood(food,screen,xx,yy);
+				generateAvailablePlace();
+				takeNewCoordinates(zmija -> snakeLength);
+				putFood(food, screen, xx, yy);
 		}
 	}
-	else if (flag == 4 && zmija->tijelo[0].y != 0 - SNAKE_HEIGHT)
+	else if (flag == 4
+										&& zmija -> tijelo[0].y != 0 - SNAKE_HEIGHT)
 	{
-		moveSnakeOnce(4);
-		if(xx == zmija->tijelo[0].x && yy==zmija->tijelo[0].y || xx == zmija->tijelo[1].x && yy==zmija->tijelo[1].y)
+		moveSnakeOnce(UP);
+		if(xx == zmija -> tijelo[0].x
+																&& yy == zmija -> tijelo[0].y
+																														|| xx == zmija -> tijelo[1].x
+																																												&& yy == zmija -> tijelo[1].y)
 		{
-			do
-			{
-			xx = RandomRow()*36;
-			yy = RandomColumn()*40;
-			}
-			while (isOnSnake(xx,yy) == 1);
-			zmija->tijelo[zmija->snakeLength].x = zmija ->tijelo[zmija->snakeLength-1].x;
-			zmija->tijelo[zmija->snakeLength].y = zmija ->tijelo[zmija->snakeLength-1].y;
-			putFood(food,screen,xx,yy);
+				generateAvailablePlace();
+				takeNewCoordinates(zmija -> snakeLength);
+				putFood(food, screen, xx, yy);
 		}
 	}
 }
@@ -119,7 +117,6 @@ int main (int argc, char* args[])
 	snakeInit();
 	srandInitialize();
 	SDL_Init(SDL_INIT_EVERYTHING);
-	//Ucitavanje slika
 	gameover = SDL_LoadBMP("resources/gameOver.bmp");
 	screen = SDL_SetVideoMode (SCREEN_WIDTH, SCREEN_HEIGHT, 32, SDL_SWSURFACE );
 	snake = SDL_LoadBMP("resources/snake.bmp");
@@ -128,129 +125,100 @@ int main (int argc, char* args[])
 	score = SDL_LoadBMP("resources/score.bmp");
 	xx = RandomRow()*36;
 	yy = RandomColumn()*40;
-	putFood(food,screen,xx,yy);
-	zmija->tijelo[0].x = x;
-	zmija->tijelo[0].y = y;
-	zmija->tijelo[1].x = x1;
-	zmija->tijelo[1].y = y1;
-	int brojac;
+	putFood(food, screen, xx, yy);
+	zmija -> tijelo[0].x = x;
+	zmija -> tijelo[0].y = y;
+	zmija -> tijelo[1].x = x1;
+	zmija -> tijelo[1].y = y1;
+	int brojac = 0;
 	for (brojac = 0; brojac < zmija -> snakeLength; brojac++)
-	apply_surface(zmija->tijelo[brojac].x-SNAKE_WIDTH,zmija->tijelo[brojac].y,snake,screen);
-
+	apply_surface(zmija -> tijelo[brojac].x - SNAKE_WIDTH,zmija -> tijelo[brojac].y, snake, screen);
 	int keyPressed = NOTHING_PRESSED;
 	int quit = 1;
-	while ((keyPressed=handleUserCommands()) != EXIT )
+	while ((keyPressed = handleUserCommands()) != EXIT )
 	{
-		int counter;
+		int counter = 0;
 		for(counter = 0; counter < zmija -> snakeLength; counter++)
-		apply_surface(zmija->tijelo[counter].x,zmija->tijelo[counter].y,black, screen );
-		if (keyPressed == 0 && zmija->tijelo[0].x <= SCREEN_WIDTH && flag != 2 ) //desno
+		apply_surface(zmija -> tijelo[counter].x,zmija -> tijelo[counter].y, black, screen );
+		if (keyPressed == 0
+											&& zmija -> tijelo[0].x <= SCREEN_WIDTH
+																														&& flag != 2 ) //desno
 		{
 			flag = 1;
-			moveSnakeOnce(1);
-			if(xx == zmija->tijelo[0].x && yy==zmija->tijelo[0].y || xx == zmija->tijelo[1].x && yy==zmija->tijelo[1].y)
+			moveSnakeOnce(RIGHT);
+			if(xx == zmija -> tijelo[0].x
+																	&& yy == zmija->tijelo[0].y
+																														|| xx == zmija->tijelo[1].x
+																																											&& yy == zmija -> tijelo[1].y)
 			{
-				do
-				{
-				xx = RandomRow()*36;
-				yy = RandomColumn()*40;
-				}
-				while (isOnSnake(xx,yy) == 1);
-
-				zmija->tijelo[zmija->snakeLength].x = zmija ->tijelo[zmija->snakeLength-1].x;
-				zmija->tijelo[zmija->snakeLength].y = zmija ->tijelo[zmija->snakeLength-1].y;
-				putFood(food,screen,xx,yy);
+				generateAvailablePlace();
+				takeNewCoordinates(zmija -> snakeLength);
+				putFood(food, screen, xx, yy);
 			}
 		}
-		else if(keyPressed == 2 && zmija->tijelo[0].x != 0 - SNAKE_WIDTH && flag != 1) //lijevo
+		else if(keyPressed == 2
+													&& zmija -> tijelo[0].x != 0 - SNAKE_WIDTH
+																																	&& flag != 1) //lijevo
 		{
-			flag=2;
-			moveSnakeOnce(2);
-			if(xx == zmija->tijelo[0].x && yy==zmija->tijelo[0].y || xx == zmija->tijelo[1].x && yy==zmija->tijelo[1].y)
+			flag = 2;
+			moveSnakeOnce(LEFT);
+			if(xx == zmija -> tijelo[0].x
+																	&& yy == zmija -> tijelo[0].y
+																															|| xx == zmija -> tijelo[1].x
+																																													&& yy == zmija -> tijelo[1].y)
 			{
-				do
-				{
-				xx = RandomRow()*36;
-				yy = RandomColumn()*40;
-				}
-				while (isOnSnake(xx,yy) == 1);
-
-				zmija->tijelo[zmija->snakeLength].x = zmija ->tijelo[zmija->snakeLength-1].x;
-				zmija->tijelo[zmija->snakeLength].y = zmija ->tijelo[zmija->snakeLength-1].y;
-				putFood(food,screen,xx,yy);
+				generateAvailablePlace();
+				takeNewCoordinates(zmija -> snakeLength);
+				putFood(food, screen, xx, yy);
 			}
 		}
-		else if(keyPressed == 1 && zmija->tijelo[0].y <= SCREEN_HEIGHT && flag != 4 ) //dole
+		else if(keyPressed == 1
+													&& zmija -> tijelo[0].y <= SCREEN_HEIGHT
+																																	&& flag != 4 ) //dole
 		{
-			flag=3;
-			moveSnakeOnce(3);
-			if(xx == zmija->tijelo[0].x && yy==zmija->tijelo[0].y || xx == zmija->tijelo[1].x && yy==zmija->tijelo[1].y)
+			flag = 3;
+			moveSnakeOnce(DOWN);
+			if(xx == zmija -> tijelo[0].x
+																	&& yy == zmija -> tijelo[0].y
+																														|| xx == zmija -> tijelo[1].x
+																																											&& yy == zmija -> tijelo[1].y)
 			{
-				do
-				{
-				xx = RandomRow()*36;
-				yy = RandomColumn()*40;
-				}
-				while (isOnSnake(xx,yy) == 1);
-
-				zmija->tijelo[zmija->snakeLength].x = zmija ->tijelo[zmija->snakeLength-1].x;
-				zmija->tijelo[zmija->snakeLength].y = zmija ->tijelo[zmija->snakeLength-1].y;
-				putFood(food,screen,xx,yy);
+				generateAvailablePlace();
+				takeNewCoordinates(zmija -> snakeLength);
+				putFood(food, screen, xx, yy);
 			}
 		}
-		else if(keyPressed == 3 && zmija->tijelo[0].y != 0 - SNAKE_HEIGHT && flag!=3) //gore
+		else if(keyPressed == 3
+													&& zmija -> tijelo[0].y != 0 - SNAKE_HEIGHT
+																																		&& flag != 3) //gore
 		{
-			flag=4;
-			moveSnakeOnce(4);
-			if(xx == zmija->tijelo[0].x && yy==zmija->tijelo[0].y || xx == zmija->tijelo[1].x && yy==zmija->tijelo[1].y)
+			flag = 4;
+			moveSnakeOnce(UP);
+			if(xx == zmija -> tijelo[0].x
+																	&& yy == zmija -> tijelo[0].y
+																															|| xx == zmija -> tijelo[1].x
+																																													&& yy == zmija -> tijelo[1].y)
 			{
-				do
-				{
-				xx = RandomRow()*36;
-				yy = RandomColumn()*40;
-				}
-				while (isOnSnake(xx,yy) == 1);
-
-				zmija->tijelo[zmija->snakeLength].x = zmija ->tijelo[zmija->snakeLength-1].x;
-				zmija->tijelo[zmija->snakeLength].y = zmija ->tijelo[zmija->snakeLength-1].y;
-				putFood(food,screen,xx,yy);
+				generateAvailablePlace();
+				takeNewCoordinates(zmija -> snakeLength);
+				putFood(food, screen, xx, yy);
 			}
 		}
 		else if(keyPressed == -3)
 		{
 			moveSnake();
 		}
-
 		for (counter = 0; counter < zmija -> snakeLength; counter++)
-		apply_surface(zmija->tijelo[counter].x, zmija->tijelo[counter].y,snake, screen );
-		SDL_Delay(zmija->delay);
+		apply_surface(zmija -> tijelo[counter].x, zmija -> tijelo[counter].y, snake, screen);
+		SDL_Delay(zmija -> delay);
 		SDL_Flip(screen);
-		if (zmija->tijelo[0].x == SCREEN_WIDTH )
-		{
-			zmija ->tijelo[0].x = 0;
-		}
-		else if (zmija->tijelo[0].y == SCREEN_HEIGHT)
-		{
-			zmija->tijelo[0].y = 0;
-		}
-		else if (zmija->tijelo[0].x == 0 - SNAKE_WIDTH)
-		{
-			zmija ->tijelo[0].x = SCREEN_WIDTH;
-		}
-		else if (zmija->tijelo[0].y == 0 - SNAKE_HEIGHT)
-		{
-			zmija->tijelo[0].y = SCREEN_HEIGHT;
-		}
-
-
+		checkBoundaries();
 		if (isSnakeDead() == 1)
 		{
-			setGameOver(gameover,screen);
+			setGameOver(gameover, screen);
 			return EXIT;
 		}
 	}
-
-
 	SDL_FreeSurface( snake );
 	SDL_Quit();
 	return 0;

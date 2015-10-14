@@ -1,7 +1,5 @@
 #include "gui.h"
 
-
-
 void apply_surface( int x, int y, SDL_Surface* source, SDL_Surface* destination )
 {
 	SDL_Rect offset;
@@ -9,95 +7,36 @@ void apply_surface( int x, int y, SDL_Surface* source, SDL_Surface* destination 
 	offset.y = y;
 	SDL_BlitSurface( source, NULL, destination, &offset );
 }
-
-
-
 void srandInitialize()
 {
 	time_t t;
 	srand((unsigned) time(&t));
 }
-
 int RandomRow()
 {
-	int row = rand() %30 ;
+	int row = rand() % 45;
 	return row;
 }
-
 int RandomColumn()
 {
-	int column = rand() % 16  ;
+	int column = rand() % 19;
 	return column;
 }
-
-
-
-
 void putFood(SDL_Surface* food, SDL_Surface* screen,int xx,int yy)
 {
 	apply_surface(xx, yy, food, screen);
-	//printf("XXXXXXXXXXXXXXXX\n");
-	result ++;
-	zmija ->snakeLength++;
-	if (zmija -> delay < 70)
+	result++;
+	zmija -> snakeLength++;
+	if (zmija -> delay < 90)
 	{
-		zmija -> delay -= 2;
+		zmija -> delay -= 1;
 	}
 	else
 	zmija -> delay -= 5;
-
 }
-
 int getScore()
 {
 	return result;
-}
-
-Uint32 getpixel(SDL_Surface *surface, int x, int y)
-{
-    int bpp = surface->format->BytesPerPixel;
-    Uint8 *p = (Uint8 *)surface->pixels + y * surface->pitch + x * bpp;
-
-    switch(bpp) {
-    case 1:
-        return *p;
-        break;
-
-    case 2:
-        return *(Uint16 *)p;
-        break;
-
-    case 3:
-        if(SDL_BYTEORDER == SDL_BIG_ENDIAN)
-            return p[0] << 16 | p[1] << 8 | p[2];
-        else
-            return p[0] | p[1] << 8 | p[2] << 16;
-        break;
-
-    case 4:
-        return *(Uint32 *)p;
-        break;
-
-    default:
-        return 0;       /* shouldn't happen, but avoids warnings */
-    }
-}
-
-int getPixelColour(int xx, int yy,SDL_Surface* screen)
-{
-		Uint32 pixel_color;
-    Uint8 r,g,b;
-		pixel_color = getpixel(screen, xx, yy);
-		SDL_PixelFormat *fmt;
-    fmt = screen->format;
-    SDL_GetRGB(pixel_color, fmt, &r, &g, &b);
-    unsigned char red, green, blue;
-    red = (unsigned char)r;
-    green = (unsigned char)g;
-    blue = (unsigned char)b;
-		if (red == 0 && green == 0 && blue == 0)
-		return 1;
-		else return 0;
 }
 static void intToString(int number, char points[])
 {
@@ -117,10 +56,8 @@ static void intToString(int number, char points[])
 	}
 	points[j] = '\0';
 }
-
 void setGameOver(SDL_Surface* gameover, SDL_Surface* screen )
 {
-
 	char points[3];
 	intToString(result, points);
 	SDL_Surface* message = NULL;
@@ -146,5 +83,4 @@ void setGameOver(SDL_Surface* gameover, SDL_Surface* screen )
 	SDL_FreeSurface(score);
 	TTF_CloseFont(font);
 	TTF_Quit();
-
 }
